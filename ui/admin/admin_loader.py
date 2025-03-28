@@ -97,11 +97,14 @@ def admin_events(flask_app: Flask, args: Args, validation_error: ValidationError
 
         return send_from_directory(directory, path)
 
-    @flask_app.route('/01/auth-admin/<path:path>')  # val - 01?
+    @flask_app.route('/auth-admin/<path:path>')  # val - 01?
     def auth_admin_yaml(path=None):
         # return send_from_directory('/tmp/','admin.yaml')
-        # using http://127.0.0.1:5656/01/auth-admin/index.html
-        return send_from_directory('ui/admin/','authentication_admin.yaml')  #val
+        # using http://127.0.0.1:5656/01/auth-admin/index.html - 404
+        # using http://127.0.0.1:5656/auth-admin/index.html - starts download (?)
+        # return send_from_directory('ui/admin/','authentication_admin.yaml')  #val
+        # TypeError: The view function for 'auth_admin_yaml' did not return a valid response. The function either returned None or ended without a return statement.
+        response = send_file("ui/admin/authentication_admin.yaml", mimetype='text/yaml')
 
     @flask_app.route('/ui/admin/<path:path>')
     def admin_yaml(path=None):
